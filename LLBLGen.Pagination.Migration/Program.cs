@@ -1,5 +1,4 @@
-﻿using System.CommandLine;
-using System.Text.Json;
+using System.CommandLine;
 using FluentMigrator.Runner;
 using LLBLGen.Pagination.Migration.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -38,19 +37,12 @@ internal class Program
             var serviceProvider = CreateServices();
 
             using var scope = serviceProvider.CreateScope();
-            if (up)
-            {
-                UpdateDatabase(scope.ServiceProvider);
-            }
+            if (up) UpdateDatabase(scope.ServiceProvider);
 
-            if (down > -1)
-            {
-                RollbackDatabase(scope.ServiceProvider, down);
-            }
-
+            if (down > -1) RollbackDatabase(scope.ServiceProvider, down);
         });
 
-        ParseResult parseResult = rootCommand.Parse(args);
+        var parseResult = rootCommand.Parse(args);
         return parseResult.InvokeAsync();
     }
 
@@ -61,7 +53,7 @@ internal class Program
     {
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appSettings.json", false, true)
             .Build();
         // Read appSettings.json manually to avoid depending on the AddJsonFile extension method
         string? conn = null;
@@ -78,7 +70,7 @@ internal class Program
 
                 // Use the explicit static extension method overload that accepts a string
                 // to avoid any ambiguous overload resolution with delegates.
-                FluentMigrator.Runner.MigrationRunnerBuilderExtensions.WithGlobalConnectionString(rb, conn);
+                rb.WithGlobalConnectionString(conn);
 
                 // Define the assembly containing the migrations
                 rb.ScanIn(typeof(_01_CustomerTable).Assembly).For.Migrations();

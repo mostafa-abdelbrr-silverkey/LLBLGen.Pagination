@@ -1,28 +1,29 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
+using System.Text;
+using System.Text.RegularExpressions;
 using LLBLGen.Pagination.Crud.Persistence;
+using LLBLGen.Pagination.Data.DatabaseSpecific;
+using LLBLGen.Pagination.Data.FactoryClasses;
+using LLBLGen.Pagination.Data.HelperClasses;
+using LLBLGen.Pagination.Data.Linq;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.QuerySpec;
-using SD.Tools.OrmProfiler.Interceptor;
-using LLBLGen.Pagination.Data.DatabaseSpecific;
-using LLBLGen.Pagination.Data.FactoryClasses;
-using LLBLGen.Pagination.Data.HelperClasses;
-using LLBLGen.Pagination.Data.Linq;
 using SD.LLBLGen.Pro.QuerySpec.Adapter;
-using System.IO;
+using SD.Tools.OrmProfiler.Interceptor;
 
 namespace LLBLGen.Pagination;
 
-class Program
+internal class Program
 {
     private static IConfiguration? _configuration;
     private static int _pageSize = 50;
     private static int _testTimeoutSeconds = 30; // timeout in seconds for each scenario
 
-    static async Task Main()
+    private static async Task Main()
     {
         InitializeConfiguration();
 
@@ -32,7 +33,8 @@ class Program
         {
             await RunWithTimeout(ScenarioPaginationWithoutProjection, "Test 1 - Pagination without Projection");
 
-            await RunWithTimeout(ScenarioPaginationWithProjectionAndFiltering, "Test 2 - Pagination with Projection and Filtering");
+            await RunWithTimeout(ScenarioPaginationWithProjectionAndFiltering,
+                "Test 2 - Pagination with Projection and Filtering");
 
             await RunWithTimeout(ScenarioPaginationWithProjection, "Test 3 - Pagination with Projection");
 
@@ -50,7 +52,7 @@ class Program
     {
         _configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile("appSettings.json", false, true)
             .Build();
 
         // Try to get page size from configuration, default to 50
@@ -59,7 +61,8 @@ class Program
 
         // Read test timeout (seconds) from configuration, default to 30 seconds
         var timeoutValue = _configuration["TestExecution:TimeoutSeconds"];
-        _testTimeoutSeconds = int.TryParse(timeoutValue, out var parsedTimeout) && parsedTimeout > 0 ? parsedTimeout : 30;
+        _testTimeoutSeconds =
+            int.TryParse(timeoutValue, out var parsedTimeout) && parsedTimeout > 0 ? parsedTimeout : 30;
 
         Console.WriteLine($"Page Size: {_pageSize}");
         Console.WriteLine($"Per-test timeout (seconds): {_testTimeoutSeconds}\n");
@@ -112,19 +115,17 @@ class Program
             return "scenario";
 
         var invalid = Path.GetInvalidFileNameChars();
-        var sb = new System.Text.StringBuilder(name.Length);
+        var sb = new StringBuilder(name.Length);
         foreach (var ch in name)
-        {
             if (Array.IndexOf(invalid, ch) >= 0)
                 sb.Append('_');
             else if (char.IsWhiteSpace(ch))
                 sb.Append('_');
             else
                 sb.Append(ch);
-        }
 
         // Collapse repeated underscores
-        var result = System.Text.RegularExpressions.Regex.Replace(sb.ToString(), "_+", "_").Trim('_');
+        var result = Regex.Replace(sb.ToString(), "_+", "_").Trim('_');
         return string.IsNullOrEmpty(result) ? "scenario" : result;
     }
 
@@ -161,7 +162,10 @@ class Program
                     {
                         adapter.Dispose();
                     }
-                    catch { /* swallow disposal errors */ }
+                    catch
+                    {
+                        /* swallow disposal errors */
+                    }
 
                     // flush and remove listener
                     Trace.Flush();
@@ -196,7 +200,10 @@ class Program
                     {
                         adapter.Dispose();
                     }
-                    catch { /* swallow disposal errors */ }
+                    catch
+                    {
+                        /* swallow disposal errors */
+                    }
 
                     // flush and remove listener
                     Trace.Flush();
@@ -210,7 +217,8 @@ class Program
             else
             {
                 // Timeout
-                Console.WriteLine($"Scenario '{name}' timed out after {timeout.TotalSeconds} seconds. Attempting to abort and dispose resources...");
+                Console.WriteLine(
+                    $"Scenario '{name}' timed out after {timeout.TotalSeconds} seconds. Attempting to abort and dispose resources...");
 
                 try
                 {
@@ -248,18 +256,17 @@ class Program
 
     private static async Task ScenarioPaginationWithoutProjection(DataAccessAdapter adapter)
     {
-        // Console.WriteLine("--- Test 1: Pagination without Projection ---");
+        Console.WriteLine("--- Test 1: Pagination without Projection ---");
         var meta = new LinqMetaData(adapter);
 
-        int pageNumber = 1;
-        var skip = pageNumber <= 1 ? 0 : (pageNumber - 1) * _pageSize;
+        const int pageNumber = 1;
 
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .Skip(skip)
+                .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
                 .ToListAsync();
 
@@ -275,11 +282,10 @@ class Program
 
     private static async Task ScenarioPaginationWithProjectionAndFiltering(DataAccessAdapter adapter)
     {
-        // Console.WriteLine("--- Test 2: Pagination with Projection and filtering ---");
+        Console.WriteLine("--- Test 2: Pagination with Projection and filtering ---");
         var meta = new LinqMetaData(adapter);
 
-        int pageNumber = 1;
-        var skip = pageNumber <= 1 ? 0 : (pageNumber - 1) * _pageSize;
+        const int pageNumber = 1;
 
         try
         {
@@ -288,14 +294,14 @@ class Program
                 .OrderByDescending(x => x.Id);
 
             var rowsIds = await query
-                .Skip(skip)
+                .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
                 .Select(x => x.Id)
                 .ToListAsync();
 
             var rows = await query
                 .Where(x => rowsIds.Contains(x.Id))
-                .Skip(skip)
+                .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
                 .ProjectToCustomerView()
                 .ToListAsync();
@@ -312,18 +318,17 @@ class Program
 
     private static async Task ScenarioPaginationWithProjection(DataAccessAdapter adapter)
     {
-        // Console.WriteLine("--- Test 3: Pagination with Projection ---");
+        Console.WriteLine("--- Test 3: Pagination with Projection ---");
         var meta = new LinqMetaData(adapter);
 
-        int pageNumber = 1;
-        var skip = pageNumber <= 1 ? 0 : (pageNumber - 1) * _pageSize;
+        const int pageNumber = 1;
 
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .Skip(skip)
+                .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
                 .ProjectToCustomerView()
                 .ToListAsync();
@@ -340,10 +345,10 @@ class Program
 
     private static async Task ScenarioPaginationWithProjectionTakePage(DataAccessAdapter adapter)
     {
-        // Console.WriteLine("--- Test 4: Pagination using TakePage with Projection ---");
+        Console.WriteLine("--- Test 4: Pagination using TakePage with Projection ---");
         var meta = new LinqMetaData(adapter);
 
-        int pageNumber = 1;
+        const int pageNumber = 1;
 
         try
         {
@@ -367,8 +372,8 @@ class Program
 
     private static async Task ScenarioPaginationWithProjectionQuerySpec(DataAccessAdapter adapter)
     {
-        // Console.WriteLine("--- Test 5: Pagination with Projection using QuerySpec and QueryFactory ---");
-        int pageNumber = 1;
+        Console.WriteLine("--- Test 5: Pagination with Projection using QuerySpec and QueryFactory ---");
+        const int pageNumber = 1;
 
         try
         {
@@ -379,7 +384,7 @@ class Program
                 .OrderBy(CustomerFields.Id.Descending())
                 .Page(pageNumber, _pageSize)
                 .ProjectToCustomerView(qf);
-            var rows = await adapter.FetchQueryAsync(q); // Replace 'object' with actual DTO type if executing
+            var rows = await adapter.FetchQueryAsync(q);
 
             Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
         }
