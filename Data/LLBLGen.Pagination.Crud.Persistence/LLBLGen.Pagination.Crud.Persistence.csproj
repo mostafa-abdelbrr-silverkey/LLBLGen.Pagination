@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>LLBLGen.Pagination.Crud.Persistence</AssemblyName>
+    <RootNamespace>LLBLGen.Pagination.Crud.Persistence</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseGeneric\LLBLGen.Pagination.Data.csproj" />
+    <ProjectReference Include="..\LLBLGen.Pagination.Crud\LLBLGen.Pagination.Crud.csproj" />
+  </ItemGroup>
+</Project>

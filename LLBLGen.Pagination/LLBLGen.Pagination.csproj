@@ -17,4 +17,17 @@
       <PackageReference Include="SD.Tools.OrmProfiler.Interceptor.NetCore" Version="2.0.8" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="appSettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Data\DatabaseGeneric\LLBLGen.Pagination.Data.csproj" />
+      <ProjectReference Include="..\Data\DatabaseSpecific\LLBLGen.Pagination.DataDBSpecific.csproj" />
+      <ProjectReference Include="..\Data\LLBLGen.Pagination.Crud.Persistence\LLBLGen.Pagination.Crud.Persistence.csproj" />
+      <ProjectReference Include="..\Data\LLBLGen.Pagination.Crud\LLBLGen.Pagination.Crud.csproj" />
+    </ItemGroup>
+
 </Project>

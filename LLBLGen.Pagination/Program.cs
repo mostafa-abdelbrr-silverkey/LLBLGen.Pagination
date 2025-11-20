@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using LLBLGen.Pagination.Crud.Persistence;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SD.LLBLGen.Pro.DQE.SqlServer;
@@ -6,7 +7,6 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.QuerySpec;
 using SD.Tools.OrmProfiler.Interceptor;
-using LLBLGen.Pagination.Data.Crud.Persistence;
 using LLBLGen.Pagination.Data.DatabaseSpecific;
 using LLBLGen.Pagination.Data.FactoryClasses;
 using LLBLGen.Pagination.Data.HelperClasses;
@@ -156,7 +156,7 @@ class Program
         Console.WriteLine();
     }
 
-    private static async Task ScenarioPaginationWithoutProjection()
+    private static async Task ScenarioPaginationWithoutProjection(DataAccessAdapter adapter)
     {
         // Console.WriteLine("--- Test 1: Pagination without Projection ---");
         var meta = new LinqMetaData(adapter);
@@ -165,11 +165,9 @@ class Program
 
         try
         {
-            var query = meta.Table1
+            var rows = await meta.Customer
                 .Where(x => x.IsActive)
-                .OrderByDescending(x => x.Id);
-
-            var rows = await query
+                .OrderByDescending(x => x.Id)
                 .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
                 .ToListAsync();
@@ -184,7 +182,7 @@ class Program
         Console.WriteLine();
     }
 
-    private static async Task ScenarioPaginationWithProjectionAndFiltering()
+    private static async Task ScenarioPaginationWithProjectionAndFiltering(DataAccessAdapter adapter)
     {
         // Console.WriteLine("--- Test 2: Pagination with Projection and filtering ---");
         var meta = new LinqMetaData(adapter);
@@ -193,7 +191,7 @@ class Program
 
         try
         {
-            var query = meta.Table1
+            var query = meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id);
 
@@ -207,7 +205,7 @@ class Program
                 .Where(x => rowsIds.Contains(x.Id))
                 .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
-                .ProjectToTable1TestView()
+                .ProjectToCustomerView()
                 .ToListAsync();
 
             Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
@@ -220,7 +218,7 @@ class Program
         Console.WriteLine();
     }
 
-    private static async Task ScenarioPaginationWithProjection()
+    private static async Task ScenarioPaginationWithProjection(DataAccessAdapter adapter)
     {
         // Console.WriteLine("--- Test 3: Pagination with Projection ---");
         var meta = new LinqMetaData(adapter);
@@ -229,12 +227,12 @@ class Program
 
         try
         {
-            var rows = await meta.Table1
+            var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
                 .Skip((pageNumber - 1) * _pageSize)
                 .Take(_pageSize)
-                .ProjectToTable1TestView()
+                .ProjectToCustomerView()
                 .ToListAsync();
 
             Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
@@ -247,7 +245,7 @@ class Program
         Console.WriteLine();
     }
 
-    private static async Task ScenarioPaginationWithProjectionTakePage()
+    private static async Task ScenarioPaginationWithProjectionTakePage(DataAccessAdapter adapter)
     {
         // Console.WriteLine("--- Test 4: Pagination using TakePage with Projection ---");
         var meta = new LinqMetaData(adapter);
@@ -256,11 +254,11 @@ class Program
 
         try
         {
-            var rows = await meta.Table1
+            var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
                 .TakePage(pageNumber, _pageSize)
-                .ProjectToTable1TestView()
+                .ProjectToCustomerView()
                 .ToListAsync();
 
             Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
@@ -274,7 +272,7 @@ class Program
     }
 
 
-    private static async Task ScenarioPaginationWithProjectionQuerySpec()
+    private static async Task ScenarioPaginationWithProjectionQuerySpec(DataAccessAdapter adapter)
     {
         // Console.WriteLine("--- Test 5: Pagination with Projection using QuerySpec and QueryFactory ---");
         int pageNumber = 1;
@@ -283,11 +281,11 @@ class Program
         {
             var qf = new QueryFactory();
 
-            var q = qf.Table1
-                .Where(Table1Fields.IsActive.Equal(true))
-                .OrderBy(Table1Fields.Id.Descending())
+            var q = qf.Customer
+                .Where(CustomerFields.IsActive.Equal(true))
+                .OrderBy(CustomerFields.Id.Descending())
                 .Page(pageNumber, _pageSize)
-                .ProjectToTable1TestView(qf);
+                .ProjectToCustomerView(qf);
             var rows = await adapter.FetchQueryAsync(q); // Replace 'object' with actual DTO type if executing
 
             Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");

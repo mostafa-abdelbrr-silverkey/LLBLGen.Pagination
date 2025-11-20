@@ -1,8 +1,16 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.Pagination", "LLBLGen.Pagination\LLBLGen.Pagination.csproj", "{2CA22F88-EC51-44DF-AB78-D171676DE52E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.Pagination.Migration", "LLBLGen.Pagination.Migration\LLBLGen.Pagination.Migration.csproj", "{63577642-85D3-40EE-BC3F-95D6340C1CEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.Pagination.Crud.Persistence", "Data\LLBLGen.Pagination.Crud.Persistence\LLBLGen.Pagination.Crud.Persistence.csproj", "{BF84E1EE-771B-4585-BBCF-BCC2AAE7261B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.Pagination.Crud", "Data\LLBLGen.Pagination.Crud\LLBLGen.Pagination.Crud.csproj", "{B70CEA82-0F3F-457B-8F22-899335BD8947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.Pagination.DataDBSpecific", "Data\DatabaseSpecific\LLBLGen.Pagination.DataDBSpecific.csproj", "{E3C050CA-962E-4AD2-A8B5-FA08C8DFDE77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LLBLGen.Pagination.Data", "Data\DatabaseGeneric\LLBLGen.Pagination.Data.csproj", "{A9508FC6-EAC7-4886-9F76-16C18ED1F80C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +22,25 @@ Global
 		{2CA22F88-EC51-44DF-AB78-D171676DE52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CA22F88-EC51-44DF-AB78-D171676DE52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CA22F88-EC51-44DF-AB78-D171676DE52E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63577642-85D3-40EE-BC3F-95D6340C1CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63577642-85D3-40EE-BC3F-95D6340C1CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63577642-85D3-40EE-BC3F-95D6340C1CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63577642-85D3-40EE-BC3F-95D6340C1CEB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF84E1EE-771B-4585-BBCF-BCC2AAE7261B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF84E1EE-771B-4585-BBCF-BCC2AAE7261B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF84E1EE-771B-4585-BBCF-BCC2AAE7261B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF84E1EE-771B-4585-BBCF-BCC2AAE7261B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70CEA82-0F3F-457B-8F22-899335BD8947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70CEA82-0F3F-457B-8F22-899335BD8947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70CEA82-0F3F-457B-8F22-899335BD8947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70CEA82-0F3F-457B-8F22-899335BD8947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C050CA-962E-4AD2-A8B5-FA08C8DFDE77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C050CA-962E-4AD2-A8B5-FA08C8DFDE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C050CA-962E-4AD2-A8B5-FA08C8DFDE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C050CA-962E-4AD2-A8B5-FA08C8DFDE77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9508FC6-EAC7-4886-9F76-16C18ED1F80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9508FC6-EAC7-4886-9F76-16C18ED1F80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9508FC6-EAC7-4886-9F76-16C18ED1F80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9508FC6-EAC7-4886-9F76-16C18ED1F80C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
