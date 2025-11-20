@@ -12,14 +12,15 @@ using LLBLGen.Pagination.Data.FactoryClasses;
 using LLBLGen.Pagination.Data.HelperClasses;
 using LLBLGen.Pagination.Data.Linq;
 using SD.LLBLGen.Pro.QuerySpec.Adapter;
+using System.IO;
 
 namespace LLBLGen.Pagination;
 
 class Program
 {
     private static IConfiguration? _configuration;
-    private static int _pageSize;
-    private static int _testTimeoutSeconds; // timeout in seconds for each scenario
+    private static int _pageSize = 50;
+    private static int _testTimeoutSeconds = 30; // timeout in seconds for each scenario
 
     static async Task Main()
     {
@@ -29,15 +30,15 @@ class Program
 
         try
         {
-            await RunWithTimeout(ScenarioPaginationWithoutProjection, "Test 1: Pagination without Projection");
+            await RunWithTimeout(ScenarioPaginationWithoutProjection, "Test 1 - Pagination without Projection");
 
-            await RunWithTimeout(ScenarioPaginationWithProjectionAndFiltering, "Test 2: Pagination with Projection and Filtering");
+            await RunWithTimeout(ScenarioPaginationWithProjectionAndFiltering, "Test 2 - Pagination with Projection and Filtering");
 
-            await RunWithTimeout(ScenarioPaginationWithProjection, "Test 3: Pagination with Projection");
+            await RunWithTimeout(ScenarioPaginationWithProjection, "Test 3 - Pagination with Projection");
 
-            await RunWithTimeout(ScenarioPaginationWithProjectionTakePage, "Test 4: Pagination with Projection using TakePage");
+            await RunWithTimeout(ScenarioPaginationWithProjectionTakePage, "Test 4 - Pagination using TakePage");
 
-            await RunWithTimeout(ScenarioPaginationWithProjectionQuerySpec, "Test 5: Pagination with Projection using QuerySpec");
+            await RunWithTimeout(ScenarioPaginationWithProjectionQuerySpec, "Test 5 - Pagination using QuerySpec");
         }
         catch (Exception ex)
         {
@@ -63,6 +64,7 @@ class Program
         Console.WriteLine($"Page Size: {_pageSize}");
         Console.WriteLine($"Per-test timeout (seconds): {_testTimeoutSeconds}\n");
 
+        // Keep console listeners for interactive output
         Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
         Trace.Listeners.Add(new ConsoleTraceListener());
         Trace.AutoFlush = true;
@@ -81,6 +83,51 @@ class Program
         });
     }
 
+    // Helper: create and return a TextWriterTraceListener that writes to a scenario-specific log file.
+    private static TraceListener CreateScenarioFileListener(string scenarioName)
+    {
+        // Ensure logs directory
+        var logsDir = Path.Combine(Directory.GetCurrentDirectory(), "logs");
+        Directory.CreateDirectory(logsDir);
+
+        // Sanitize scenario name for a safe filename
+        var safeName = SanitizeFileName(scenarioName);
+        var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmssfff");
+        var fileName = $"{safeName}_{timestamp}.log";
+        var filePath = Path.Combine(logsDir, fileName);
+
+        // Create a TextWriterTraceListener that writes to the file. Trace.AutoFlush will ensure writes are flushed.
+        var writer = File.CreateText(filePath);
+        var listener = new TextWriterTraceListener(writer)
+        {
+            Name = safeName
+        };
+        return listener;
+    }
+
+    // Helper: remove invalid chars and replace spaces to create a safe filename
+    private static string SanitizeFileName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return "scenario";
+
+        var invalid = Path.GetInvalidFileNameChars();
+        var sb = new System.Text.StringBuilder(name.Length);
+        foreach (var ch in name)
+        {
+            if (Array.IndexOf(invalid, ch) >= 0)
+                sb.Append('_');
+            else if (char.IsWhiteSpace(ch))
+                sb.Append('_');
+            else
+                sb.Append(ch);
+        }
+
+        // Collapse repeated underscores
+        var result = System.Text.RegularExpressions.Regex.Replace(sb.ToString(), "_+", "_").Trim('_');
+        return string.IsNullOrEmpty(result) ? "scenario" : result;
+    }
+
     private static async Task RunWithTimeout(Func<DataAccessAdapter, Task> scenarioFunc, string name)
     {
         var timeout = TimeSpan.FromSeconds(_testTimeoutSeconds);
@@ -88,69 +135,112 @@ class Program
         Console.WriteLine($"Running scenario: {name} (timeout: {timeout.TotalSeconds}s)");
 
         var adapter = new DataAccessAdapter();
-        var scenarioTask = scenarioFunc(adapter);
 
-        if (_testTimeoutSeconds <= 0)
+        // Create per-scenario file listener and add it to Trace listeners
+        TraceListener? fileListener = null;
+        try
         {
-            try
+            fileListener = CreateScenarioFileListener(name);
+            Trace.Listeners.Add(fileListener);
+
+            var scenarioTask = scenarioFunc(adapter);
+
+            if (_testTimeoutSeconds <= 0)
             {
-                await scenarioTask;
+                try
+                {
+                    await scenarioTask;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Scenario '{name}' failed: {ex.Message}");
+                }
+                finally
+                {
+                    try
+                    {
+                        adapter.Dispose();
+                    }
+                    catch { /* swallow disposal errors */ }
+
+                    // flush and remove listener
+                    Trace.Flush();
+                    if (fileListener != null)
+                    {
+                        Trace.Listeners.Remove(fileListener);
+                        fileListener.Dispose();
+                    }
+                }
+
+                return;
             }
-            catch (Exception ex)
+
+            var delayTask = Task.Delay(timeout);
+            var completed = await Task.WhenAny(scenarioTask, delayTask);
+
+            if (completed == scenarioTask)
             {
-                Console.WriteLine($"Scenario '{name}' failed: {ex.Message}");
+                // Completed in time - observe any exception
+                try
+                {
+                    await scenarioTask;
+                    Console.WriteLine($"Scenario '{name}' completed successfully.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Scenario '{name}' failed: {ex.Message}");
+                }
+                finally
+                {
+                    try
+                    {
+                        adapter.Dispose();
+                    }
+                    catch { /* swallow disposal errors */ }
+
+                    // flush and remove listener
+                    Trace.Flush();
+                    if (fileListener != null)
+                    {
+                        Trace.Listeners.Remove(fileListener);
+                        fileListener.Dispose();
+                    }
+                }
             }
-            finally
+            else
             {
+                // Timeout
+                Console.WriteLine($"Scenario '{name}' timed out after {timeout.TotalSeconds} seconds. Attempting to abort and dispose resources...");
+
                 try
                 {
                     adapter.Dispose();
                 }
-                catch { /* swallow disposal errors */ }
-            }
-
-            return;
-        }
-
-        var delayTask = Task.Delay(timeout);
-        var completed = await Task.WhenAny(scenarioTask, delayTask);
-
-        if (completed == scenarioTask)
-        {
-            // Completed in time - observe any exception
-            try
-            {
-                await scenarioTask;
-                Console.WriteLine($"Scenario '{name}' completed successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Scenario '{name}' failed: {ex.Message}");
-            }
-            finally
-            {
-                try
+                catch (Exception ex)
                 {
-                    adapter.Dispose();
+                    Console.WriteLine($"Error while disposing adapter after timeout: {ex.Message}");
                 }
-                catch { /* swallow disposal errors */ }
+
+                // flush and remove listener
+                Trace.Flush();
+                if (fileListener != null)
+                {
+                    Trace.Listeners.Remove(fileListener);
+                    fileListener.Dispose();
+                }
+
+                // We won't throw here to allow remaining scenarios to run; caller can inspect logs.
             }
         }
-        else
+        finally
         {
-            // Timeout
-            Console.WriteLine($"Scenario '{name}' timed out after {timeout.TotalSeconds} seconds. Attempting to abort and dispose resources...");
-
-            try
+            // Ensure listener removed in case of unexpected exceptions
+            if (fileListener != null && Trace.Listeners.Contains(fileListener))
             {
-                adapter.Dispose();
+                Trace.Flush();
+                Trace.Listeners.Remove(fileListener);
+                fileListener.Dispose();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error while disposing adapter after timeout: {ex.Message}");
-            }
-
-            // We won't throw here to allow remaining scenarios to run; caller can inspect logs.
         }
 
         Console.WriteLine();
@@ -162,13 +252,14 @@ class Program
         var meta = new LinqMetaData(adapter);
 
         int pageNumber = 1;
+        var skip = pageNumber <= 1 ? 0 : (pageNumber - 1) * _pageSize;
 
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .Skip((pageNumber - 1) * _pageSize)
+                .Skip(skip)
                 .Take(_pageSize)
                 .ToListAsync();
 
@@ -188,6 +279,7 @@ class Program
         var meta = new LinqMetaData(adapter);
 
         int pageNumber = 1;
+        var skip = pageNumber <= 1 ? 0 : (pageNumber - 1) * _pageSize;
 
         try
         {
@@ -196,14 +288,14 @@ class Program
                 .OrderByDescending(x => x.Id);
 
             var rowsIds = await query
-                .Skip((pageNumber - 1) * _pageSize)
+                .Skip(skip)
                 .Take(_pageSize)
                 .Select(x => x.Id)
                 .ToListAsync();
 
             var rows = await query
                 .Where(x => rowsIds.Contains(x.Id))
-                .Skip((pageNumber - 1) * _pageSize)
+                .Skip(skip)
                 .Take(_pageSize)
                 .ProjectToCustomerView()
                 .ToListAsync();
@@ -224,13 +316,14 @@ class Program
         var meta = new LinqMetaData(adapter);
 
         int pageNumber = 1;
+        var skip = pageNumber <= 1 ? 0 : (pageNumber - 1) * _pageSize;
 
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .Skip((pageNumber - 1) * _pageSize)
+                .Skip(skip)
                 .Take(_pageSize)
                 .ProjectToCustomerView()
                 .ToListAsync();
