@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentMigrator.Extensions.SqlServer" Version="7.1.0" />
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+      <PackageReference Include="SD.LLBLGen.Pro.DQE.SqlServer" Version="5.12.2-hotfix-20251112" />
+      <PackageReference Include="SD.Tools.OrmProfiler.Interceptor.NetCore" Version="2.0.8" />
+    </ItemGroup>
+
+</Project>
