@@ -54,6 +54,12 @@ var rows = await meta.Customer
                 .Take(_pageSize)
                 .ToListAsync();
 ```
+Generated SQL query sample:
+```sql
+Query: SELECT TOP(@p2) [LPA_L1].[Id], [LPA_L1].[IsActive], [LPA_L1].[Name], [LPA_L1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPA_L1] WHERE ( ( ( ( ( [LPA_L1].[IsActive] = @p3))))) ORDER BY [LPA_L1].[Id] DESC
+Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
+Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+```
 Logs: [SampleLogs/Test_1_-_Pagination_without_Projection_20251120_175537355.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_1_-_Pagination_without_Projection_20251120_175537355.log)
 
 ## Scenario 2: Pagination with projection and filtering.  
@@ -80,6 +86,12 @@ var rows = await query
     .ProjectToCustomerTestView()
     .ToListAsync();
 ```
+Generated SQL query sample:
+```sql
+Query: SELECT TOP(@p2) [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p3)))))))) ORDER BY [LPLA_1].[Id] DESC
+Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
+Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+```
 Logs: [SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251120_175539039.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251120_175539039.log)
 
 ## Scenario 3: Pagination with projection.  
@@ -96,6 +108,13 @@ var rows = await meta.Customer
                 .Take(_pageSize)
                 .ProjectToCustomerTestView()
                 .ToListAsync();
+```
+
+Generated SQL query sample:
+```sql
+Query: SELECT TOP(@p2) [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p3)))))))) ORDER BY [LPLA_1].[Id] DESC
+Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
+Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
 ```
 Logs: [SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log)
 
@@ -114,6 +133,12 @@ var rows = await meta.Customer
                 .ProjectToCustomerView()
                 .ToListAsync();
 ```
+Generated SQL query sample:
+```sql
+Query: SELECT TOP(@p2) [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p3))))))) ORDER BY [LPLA_1].[Id] DESC
+Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
+Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+```
 Logs: [SampleLogs/Test_4_-_Pagination_using_TakePage_20251120_175544144.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_4_-_Pagination_using_TakePage_20251120_175544144.log)
 
 ## Scenario 5: Pagination and projection using QuerySpec and QueryFactory
@@ -128,5 +153,11 @@ var q = qf.Customer
                 .OrderBy(CustomerFields.Id.Descending())
                 .Page(pageNumber, _pageSize)
                 .ProjectToCustomerView(qf);
+```
+Generated SQL query sample:
+```sql
+Query: SELECT TOP(@p2) [Restaurant].[dbo].[Customer].[Id], [Restaurant].[dbo].[Customer].[IsActive], [Restaurant].[dbo].[Customer].[Name], [Restaurant].[dbo].[Customer].[TableNumber] FROM [Restaurant].[dbo].[Customer] WHERE ( ( [Restaurant].[dbo].[Customer].[IsActive] = @p3)) ORDER BY [Restaurant].[dbo].[Customer].[Id] DESC
+Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
+Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
 ```
 Logs: [SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251120_175546415.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251120_175546415.log)
