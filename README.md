@@ -44,6 +44,7 @@ You can also find a snapshot from ORM Profiler in the repository root.
 Simply fetches 50 rows (page size is 50).  
 Result: fetches exactly 50 rows across all queries as shown in ORM Profiler.  
 ORM Profiler Connection: #1.  
+![1763889211229](image/README/1763889211229.png)
 Query:
 ```csharp
 var rows = await meta.Customer
@@ -53,12 +54,13 @@ var rows = await meta.Customer
                 .Take(_pageSize)
                 .ToListAsync();
 ```
-Logs: [SampleLogs\Test_1_-_Pagination_without_Projection_20251120_175537355.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_1_-_Pagination_without_Projection_20251120_175537355.log)
+Logs: [SampleLogs/Test_1_-_Pagination_without_Projection_20251120_175537355.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_1_-_Pagination_without_Projection_20251120_175537355.log)
 
 ## Scenario 2: Pagination with projection and filtering.  
-Fetches 50 rows using pagination without projection first and selects IDs then it is used as a filter in the pagination with projection query.  
-Result: Only 50 rows are accessed in both queries.
+Fetches 50 rows using pagination without projection first and selects IDs then it is used as a filter in the pagination with projection query.    
+Result: Only 50 rows are accessed in both queries.  
 ORM Profiler Connection: #2.  
+![1763889197143](image/README/1763889197143.png)
 Query:
 ```csharp
 var query = meta.Customer
@@ -78,12 +80,13 @@ var rows = await query
     .ProjectToCustomerTestView()
     .ToListAsync();
 ```
-Logs: [SampleLogs\Test_2_-_Pagination_with_Projection_and_Filtering_20251120_175539039.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251120_175539039.log)
+Logs: [SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251120_175539039.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251120_175539039.log)
 
 ## Scenario 3: Pagination with projection.  
 Simply fetches 50 rows using pagination and projection.  
-Result: Simplest form of the issue where all table rows are accessed instead of only 50.
+Result: Simplest form of the issue where all table rows are accessed instead of only 50.  
 ORM Profiler Connection: #3.  
+![1763889296669](image/README/1763889296669.png)
 Query:
 ```csharp
 var rows = await meta.Customer
@@ -94,13 +97,14 @@ var rows = await meta.Customer
                 .ProjectToCustomerTestView()
                 .ToListAsync();
 ```
-Logs: [SampleLogs\Test_3_-_Pagination_with_Projection_20251120_175541105.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log)
+Logs: [SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log)
 
 ## Scenario 4: Pagination using `TakePage` with projection
-Same as the last scenario.
+Same as the last scenario.  
 Simply fetches 50 rows using pagination and projection, but using `TakePage` instead of `Skip/Take`.  
-Result: Same as the last scenario. All table rows are accessed instead of only 50.
+Result: Same as the last scenario. All table rows are accessed instead of only 50.  
 ORM Profiler Connection: #4.  
+![1763889109766](image/README/1763889109766.png)
 Query:
 ```csharp
 var rows = await meta.Customer
@@ -110,12 +114,13 @@ var rows = await meta.Customer
                 .ProjectToCustomerView()
                 .ToListAsync();
 ```
-Logs: [SampleLogs\Test_4_-_Pagination_using_TakePage_20251120_175544144.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_4_-_Pagination_using_TakePage_20251120_175544144.log)
+Logs: [SampleLogs/Test_4_-_Pagination_using_TakePage_20251120_175544144.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_4_-_Pagination_using_TakePage_20251120_175544144.log)
 
 ## Scenario 5: Pagination and projection using QuerySpec and QueryFactory
 Simply fetches 50 rows using pagination and projection but this time using QuerySpec and QueryFactory.
 Result: Same as the last scenario. All table rows are accessed instead of only 50.  
 ORM Profiler Connection: #5.  
+![1763889136580](image/README/1763889136580.png)
 Query:
 ```csharp
 var q = qf.Customer
@@ -124,4 +129,4 @@ var q = qf.Customer
                 .Page(pageNumber, _pageSize)
                 .ProjectToCustomerView(qf);
 ```
-Logs: [SampleLogs\Test_5_-_Pagination_using_QuerySpec_20251120_175546415.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251120_175546415.log)
+Logs: [SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251120_175546415.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251120_175546415.log)
