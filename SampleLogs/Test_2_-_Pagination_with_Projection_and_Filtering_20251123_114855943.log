@@ -1,0 +1,178 @@
+[2025-Nov-23 11:48:55.986]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:48:55.987]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:48:55.987]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))))) ORDER BY [LPLA_1].[Id] DESC
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:48:55.988]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:48:55.988]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))))) ORDER BY [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:48:55.988]::Method Exit: CreatePagingSelectDQ
+[2025-Nov-23 11:48:56.022]::Executed Sql Query: 
+	Query: SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))))) ORDER BY [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+
+[2025-Nov-23 11:48:56.081]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:48:56.081]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:48:56.085]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1))) AND ( [LPLA_1].[Id] IN (@p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43, @p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51)))))))) ORDER BY [LPLA_1].[Id] DESC
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+	Parameter: @p2 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999750.
+	Parameter: @p3 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999749.
+	Parameter: @p4 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999748.
+	Parameter: @p5 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999747.
+	Parameter: @p6 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999746.
+	Parameter: @p7 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999745.
+	Parameter: @p8 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999744.
+	Parameter: @p9 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999743.
+	Parameter: @p10 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999742.
+	Parameter: @p11 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999741.
+	Parameter: @p12 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999740.
+	Parameter: @p13 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999739.
+	Parameter: @p14 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999738.
+	Parameter: @p15 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999737.
+	Parameter: @p16 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999736.
+	Parameter: @p17 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999735.
+	Parameter: @p18 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999734.
+	Parameter: @p19 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999733.
+	Parameter: @p20 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999732.
+	Parameter: @p21 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999731.
+	Parameter: @p22 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999730.
+	Parameter: @p23 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999729.
+	Parameter: @p24 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999728.
+	Parameter: @p25 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999727.
+	Parameter: @p26 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999726.
+	Parameter: @p27 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999725.
+	Parameter: @p28 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999724.
+	Parameter: @p29 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999723.
+	Parameter: @p30 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999722.
+	Parameter: @p31 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999721.
+	Parameter: @p32 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999720.
+	Parameter: @p33 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999719.
+	Parameter: @p34 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999718.
+	Parameter: @p35 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999717.
+	Parameter: @p36 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999716.
+	Parameter: @p37 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999715.
+	Parameter: @p38 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999714.
+	Parameter: @p39 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999713.
+	Parameter: @p40 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999712.
+	Parameter: @p41 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999711.
+	Parameter: @p42 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999710.
+	Parameter: @p43 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999709.
+	Parameter: @p44 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999708.
+	Parameter: @p45 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999707.
+	Parameter: @p46 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999706.
+	Parameter: @p47 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999705.
+	Parameter: @p48 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999704.
+	Parameter: @p49 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999703.
+	Parameter: @p50 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999702.
+	Parameter: @p51 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999701.
+[2025-Nov-23 11:48:56.087]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:48:56.088]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1))) AND ( [LPLA_1].[Id] IN (@p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43, @p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51)))))))) ORDER BY [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+	Parameter: @p2 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999750.
+	Parameter: @p3 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999749.
+	Parameter: @p4 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999748.
+	Parameter: @p5 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999747.
+	Parameter: @p6 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999746.
+	Parameter: @p7 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999745.
+	Parameter: @p8 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999744.
+	Parameter: @p9 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999743.
+	Parameter: @p10 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999742.
+	Parameter: @p11 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999741.
+	Parameter: @p12 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999740.
+	Parameter: @p13 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999739.
+	Parameter: @p14 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999738.
+	Parameter: @p15 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999737.
+	Parameter: @p16 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999736.
+	Parameter: @p17 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999735.
+	Parameter: @p18 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999734.
+	Parameter: @p19 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999733.
+	Parameter: @p20 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999732.
+	Parameter: @p21 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999731.
+	Parameter: @p22 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999730.
+	Parameter: @p23 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999729.
+	Parameter: @p24 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999728.
+	Parameter: @p25 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999727.
+	Parameter: @p26 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999726.
+	Parameter: @p27 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999725.
+	Parameter: @p28 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999724.
+	Parameter: @p29 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999723.
+	Parameter: @p30 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999722.
+	Parameter: @p31 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999721.
+	Parameter: @p32 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999720.
+	Parameter: @p33 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999719.
+	Parameter: @p34 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999718.
+	Parameter: @p35 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999717.
+	Parameter: @p36 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999716.
+	Parameter: @p37 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999715.
+	Parameter: @p38 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999714.
+	Parameter: @p39 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999713.
+	Parameter: @p40 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999712.
+	Parameter: @p41 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999711.
+	Parameter: @p42 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999710.
+	Parameter: @p43 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999709.
+	Parameter: @p44 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999708.
+	Parameter: @p45 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999707.
+	Parameter: @p46 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999706.
+	Parameter: @p47 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999705.
+	Parameter: @p48 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999704.
+	Parameter: @p49 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999703.
+	Parameter: @p50 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999702.
+	Parameter: @p51 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999701.
+[2025-Nov-23 11:48:56.090]::Method Exit: CreatePagingSelectDQ
+[2025-Nov-23 11:48:56.097]::Executed Sql Query: 
+	Query: SELECT [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1))) AND ( [LPLA_1].[Id] IN (@p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43, @p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51)))))))) ORDER BY [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+	Parameter: @p2 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999750.
+	Parameter: @p3 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999749.
+	Parameter: @p4 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999748.
+	Parameter: @p5 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999747.
+	Parameter: @p6 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999746.
+	Parameter: @p7 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999745.
+	Parameter: @p8 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999744.
+	Parameter: @p9 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999743.
+	Parameter: @p10 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999742.
+	Parameter: @p11 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999741.
+	Parameter: @p12 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999740.
+	Parameter: @p13 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999739.
+	Parameter: @p14 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999738.
+	Parameter: @p15 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999737.
+	Parameter: @p16 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999736.
+	Parameter: @p17 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999735.
+	Parameter: @p18 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999734.
+	Parameter: @p19 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999733.
+	Parameter: @p20 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999732.
+	Parameter: @p21 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999731.
+	Parameter: @p22 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999730.
+	Parameter: @p23 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999729.
+	Parameter: @p24 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999728.
+	Parameter: @p25 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999727.
+	Parameter: @p26 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999726.
+	Parameter: @p27 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999725.
+	Parameter: @p28 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999724.
+	Parameter: @p29 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999723.
+	Parameter: @p30 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999722.
+	Parameter: @p31 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999721.
+	Parameter: @p32 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999720.
+	Parameter: @p33 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999719.
+	Parameter: @p34 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999718.
+	Parameter: @p35 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999717.
+	Parameter: @p36 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999716.
+	Parameter: @p37 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999715.
+	Parameter: @p38 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999714.
+	Parameter: @p39 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999713.
+	Parameter: @p40 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999712.
+	Parameter: @p41 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999711.
+	Parameter: @p42 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999710.
+	Parameter: @p43 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999709.
+	Parameter: @p44 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999708.
+	Parameter: @p45 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999707.
+	Parameter: @p46 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999706.
+	Parameter: @p47 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999705.
+	Parameter: @p48 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999704.
+	Parameter: @p49 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999703.
+	Parameter: @p50 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999702.
+	Parameter: @p51 : Int32. Length: 0. Precision: 10. Scale: 0. Direction: Input. Value: 999701.
+

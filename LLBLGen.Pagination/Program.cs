@@ -55,10 +55,6 @@ internal class Program
             .AddJsonFile("appSettings.json", false, true)
             .Build();
 
-        // Try to get page size from configuration, default to 50
-        var pageSizeValue = _configuration["Pagination:PageSize"];
-        _pageSize = int.TryParse(pageSizeValue, out var parsedPageSize) ? parsedPageSize : 50;
-
         // Read test timeout (seconds) from configuration, default to 30 seconds
         var timeoutValue = _configuration["TestExecution:TimeoutSeconds"];
         _testTimeoutSeconds =
@@ -259,18 +255,16 @@ internal class Program
         Console.WriteLine("--- Test 1: Pagination without Projection ---");
         var meta = new LinqMetaData(adapter);
 
-        const int pageNumber = 1;
-
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .Skip((pageNumber - 1) * _pageSize)
-                .Take(_pageSize)
+                .Skip(5 * 50)
+                .Take(50)
                 .ToListAsync();
 
-            Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
         }
         catch (Exception ex)
         {
@@ -285,8 +279,6 @@ internal class Program
         Console.WriteLine("--- Test 2: Pagination with Projection and filtering ---");
         var meta = new LinqMetaData(adapter);
 
-        const int pageNumber = 1;
-
         try
         {
             var query = meta.Customer
@@ -294,19 +286,19 @@ internal class Program
                 .OrderByDescending(x => x.Id);
 
             var rowsIds = await query
-                .Skip((pageNumber - 1) * _pageSize)
-                .Take(_pageSize)
+                .Skip(5 * 50)
+                .Take(50)
                 .Select(x => x.Id)
                 .ToListAsync();
 
             var rows = await query
                 .Where(x => rowsIds.Contains(x.Id))
-                .Skip((pageNumber - 1) * _pageSize)
-                .Take(_pageSize)
+                .Skip(5 * 50)
+                .Take(50)
                 .ProjectToCustomerView()
                 .ToListAsync();
 
-            Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
         }
         catch (Exception ex)
         {
@@ -321,19 +313,17 @@ internal class Program
         Console.WriteLine("--- Test 3: Pagination with Projection ---");
         var meta = new LinqMetaData(adapter);
 
-        const int pageNumber = 1;
-
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .Skip((pageNumber - 1) * _pageSize)
-                .Take(_pageSize)
+                .Skip(5 * 50)
+                .Take(50)
                 .ProjectToCustomerView()
                 .ToListAsync();
 
-            Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
         }
         catch (Exception ex)
         {
@@ -348,18 +338,16 @@ internal class Program
         Console.WriteLine("--- Test 4: Pagination using TakePage with Projection ---");
         var meta = new LinqMetaData(adapter);
 
-        const int pageNumber = 1;
-
         try
         {
             var rows = await meta.Customer
                 .Where(x => x.IsActive)
                 .OrderByDescending(x => x.Id)
-                .TakePage(pageNumber, _pageSize)
+                .TakePage(5, 50)
                 .ProjectToCustomerView()
                 .ToListAsync();
 
-            Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
         }
         catch (Exception ex)
         {
@@ -373,7 +361,6 @@ internal class Program
     private static async Task ScenarioPaginationWithProjectionQuerySpec(DataAccessAdapter adapter)
     {
         Console.WriteLine("--- Test 5: Pagination with Projection using QuerySpec and QueryFactory ---");
-        const int pageNumber = 1;
 
         try
         {
@@ -382,11 +369,11 @@ internal class Program
             var q = qf.Customer
                 .Where(CustomerFields.IsActive.Equal(true))
                 .OrderBy(CustomerFields.Id.Descending())
-                .Page(pageNumber, _pageSize)
+                .Page(5, 50)
                 .ProjectToCustomerView(qf);
             var rows = await adapter.FetchQueryAsync(q);
 
-            Console.WriteLine($"Retrieved {rows.Count} rows from page {pageNumber}");
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
         }
         catch (Exception ex)
         {

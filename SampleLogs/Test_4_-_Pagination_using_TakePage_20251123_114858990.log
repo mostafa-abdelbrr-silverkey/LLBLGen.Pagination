@@ -1,0 +1,54 @@
+[2025-Nov-23 11:48:58.996]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:48:58.997]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:48:58.997]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1))))))) ORDER BY [LPLA_1].[Id] DESC
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:48:58.998]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:48:58.998]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1))))))) ORDER BY [LPLA_1].[Id] DESC OFFSET 200 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:48:58.998]::Method Exit: CreatePagingSelectDQ
+[2025-Nov-23 11:48:59.002]::Executed Sql Query: 
+	Query: SELECT [LPLA_1].[Id], [LPLA_1].[IsActive], [LPLA_1].[Name], 1 AS [LPFA_3], 1 AS [LPFA_4], [LPLA_1].[TableNumber] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1))))))) ORDER BY [LPLA_1].[Id] DESC OFFSET 200 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+
+[2025-Nov-23 11:48:59.003]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:48:59.004]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:48:59.004]::Method Enter: CreateSubQuery
+[2025-Nov-23 11:48:59.004]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:48:59.004]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:48:59.004]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))) AND [LPLA_1].[Id] = [LPLA_2].[CustomerId])
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:48:59.004]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:48:59.005]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-23 11:48:59.005]::Method Exit: CreateSubQuery
+[2025-Nov-23 11:48:59.005]::Generated Sql query: 
+	Query: SELECT [LPLA_2].[CustomerId], [LPLA_2].[Id], [LPLA_2].[IsActive], [LPLA_2].[Name], [LPLA_2].[Price] FROM [Restaurant].[dbo].[Order] [LPLA_2] WHERE ( ( (  EXISTS (SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))) AND [LPLA_1].[Id] = [LPLA_2].[CustomerId])))))
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:48:59.005]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:48:59.005]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-23 11:48:59.032]::Executed Sql Query: 
+	Query: SELECT [LPLA_2].[CustomerId], [LPLA_2].[Id], [LPLA_2].[IsActive], [LPLA_2].[Name], [LPLA_2].[Price] FROM [Restaurant].[dbo].[Order] [LPLA_2] WHERE ( ( (  EXISTS (SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))) AND [LPLA_1].[Id] = [LPLA_2].[CustomerId])))))
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+
+[2025-Nov-23 11:49:00.071]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:49:00.072]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:49:00.072]::Method Enter: CreateSubQuery
+[2025-Nov-23 11:49:00.072]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-23 11:49:00.072]::Method Enter: CreateSelectDQ
+[2025-Nov-23 11:49:00.072]::Generated Sql query: 
+	Query: SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))) AND [LPLA_1].[Id] = [LPLA_4].[CustomerId])
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:49:00.073]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:49:00.073]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-23 11:49:00.073]::Method Exit: CreateSubQuery
+[2025-Nov-23 11:49:00.073]::Generated Sql query: 
+	Query: SELECT [LPLA_4].[CustomerId], [LPLA_4].[Id], [LPLA_4].[IsActive], [LPLA_4].[OrderId] FROM [Restaurant].[dbo].[Receipt] [LPLA_4] WHERE ( ( (  EXISTS (SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))) AND [LPLA_1].[Id] = [LPLA_4].[CustomerId])))))
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-23 11:49:00.073]::Method Exit: CreateSelectDQ
+[2025-Nov-23 11:49:00.074]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-23 11:49:00.113]::Executed Sql Query: 
+	Query: SELECT [LPLA_4].[CustomerId], [LPLA_4].[Id], [LPLA_4].[IsActive], [LPLA_4].[OrderId] FROM [Restaurant].[dbo].[Receipt] [LPLA_4] WHERE ( ( (  EXISTS (SELECT [LPLA_1].[Id] FROM [Restaurant].[dbo].[Customer] [LPLA_1] WHERE ( ( ( ( ( ( ( [LPLA_1].[IsActive] = @p1)))))) AND [LPLA_1].[Id] = [LPLA_4].[CustomerId])))))
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+
