@@ -17,6 +17,10 @@ Tables:
   - CustomerId: ID of the customer who made the order.
   - OrderId: ID of the order the customer made.
   - IsActive: simple boolean properly for soft deletion.
+
+Relationships:
+- Customer-Order: 1:many.
+- Customer-Receipt: 1:many.
   
 Notes: all columns are not nullable for simplicity, and seeded with 1 million rows using the migration project.
 
@@ -42,7 +46,8 @@ You can also find a snapshot from ORM Profiler in the repository root.
 
 ## ORM Profiler results
 The following results are referenced in the scenario documentation, specifically the `# rows read` column.
-![ORMProfilerResults](image/README/ORMProfilerResults.png)
+![ORMProfilerResults1](image/README/ORMProfilerResults1.png)
+![ORMProfilerResults2](image/README/ORMProfilerResults2.png)
 
 ## Scenario 1: Pagination without projection.  
 Simply fetches 50 rows (page size is 50).  
@@ -84,7 +89,7 @@ ORDER BY
 Name	DbType	Value
 @p1	Boolean	True
 ```
-Logs: [SampleLogs/Test_1_-_Pagination_without_Projection_20251120_175537355.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_1_-_Pagination_without_Projection_20251123_114854927.log)
+Logs: [SampleLogs/Test_1_-_Pagination_without_Projection_20251124_140946127.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_1_-_Pagination_without_Projection_20251124_140946127.log)
 
 ## Scenario 2: Pagination with projection and filtering.  
 Fetches 50 rows using pagination without projection first and selects IDs then it is used as a filter in the pagination with projection query.    
@@ -109,8 +114,36 @@ var rows = await query
     .ProjectToCustomerView()
     .ToListAsync();
 ```
-Generated SQL query sample:
+Generated SQL query:
 ```sql
+SELECT
+    [LPLA_1].[Id] 
+FROM
+    [Restaurant].[dbo].[Customer] [LPLA_1] 
+WHERE
+    (
+        (
+            (
+                (
+                    (
+                        (
+                            (
+                                (
+                                    [LPLA_1].[IsActive] = @p1
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ) 
+ORDER BY
+    [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+
+Name	DbType	Value
+@p1	Boolean	True
+
 SELECT
     [LPLA_1].[Id],
     [LPLA_1].[IsActive],
@@ -201,7 +234,7 @@ Name	DbType	Value
 @p50	Int32	999702
 @p51	Int32	999701
 ```
-Logs: [SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251123_114855943.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251123_114855943.log)
+Logs: [SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251124_140947174.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_2_-_Pagination_with_Projection_and_Filtering_20251124_140947174.log)
 
 ## Scenario 3: Pagination with projection.  
 Simply fetches 50 rows using pagination and projection.  
@@ -252,8 +285,37 @@ ORDER BY
 
 Name	DbType	Value
 @p1	Boolean	True
+
+SELECT [LPLA_2].[CustomerId],
+       [LPLA_2].[Id],
+       [LPLA_2].[IsActive],
+       [LPLA_2].[Name],
+       [LPLA_2].[Price]
+FROM   [Restaurant].[dbo].[Order] [LPLA_2]
+WHERE  (((EXISTS
+          (SELECT [LPLA_1].[Id]
+           FROM   [Restaurant].[dbo].[Customer] [LPLA_1]
+           WHERE  (((((((([LPLA_1].[IsActive] = @p1)))))))
+               AND [LPLA_1].[Id] = [LPLA_2].[CustomerId]))))) 
+
+Name	DbType	Value
+@p1	Boolean	True
+
+SELECT [LPLA_4].[CustomerId],
+       [LPLA_4].[Id],
+       [LPLA_4].[IsActive],
+       [LPLA_4].[OrderId]
+FROM   [Restaurant].[dbo].[Receipt] [LPLA_4]
+WHERE  (((EXISTS
+          (SELECT [LPLA_1].[Id]
+           FROM   [Restaurant].[dbo].[Customer] [LPLA_1]
+           WHERE  (((((((([LPLA_1].[IsActive] = @p1)))))))
+               AND [LPLA_1].[Id] = [LPLA_4].[CustomerId]))))) 
+
+Name	DbType	Value
+@p1	Boolean	True
 ```
-Logs: [SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_3_-_Pagination_with_Projection_20251120_175541105.log)
+Logs: [SampleLogs/Test_3_-_Pagination_with_Projection_20251124_140947381.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_3_-_Pagination_with_Projection_20251124_140947381.log)
 
 ## Scenario 4: Pagination using `TakePage` with projection
 Same as the last scenario.  
@@ -301,8 +363,31 @@ ORDER BY
 
 Name	DbType	Value
 @p1	Boolean	True
+
+SELECT [LPLA_2].[CustomerId],
+       [LPLA_2].[Id],
+       [LPLA_2].[IsActive],
+       [LPLA_2].[Name],
+       [LPLA_2].[Price]
+FROM   [Restaurant].[dbo].[Order] [LPLA_2]
+WHERE  (((EXISTS
+          (SELECT [LPLA_1].[Id]
+           FROM   [Restaurant].[dbo].[Customer] [LPLA_1]
+           WHERE  ((((((([LPLA_1].[IsActive] = @p1))))))
+               AND [LPLA_1].[Id] = [LPLA_2].[CustomerId]))))) 
+
+SELECT [LPLA_4].[CustomerId],
+       [LPLA_4].[Id],
+       [LPLA_4].[IsActive],
+       [LPLA_4].[OrderId]
+FROM   [Restaurant].[dbo].[Receipt] [LPLA_4]
+WHERE  (((EXISTS
+          (SELECT [LPLA_1].[Id]
+           FROM   [Restaurant].[dbo].[Customer] [LPLA_1]
+           WHERE  ((((((([LPLA_1].[IsActive] = @p1))))))
+               AND [LPLA_1].[Id] = [LPLA_4].[CustomerId]))))) 
 ```
-Logs: [SampleLogs/Test_4_-_Pagination_using_TakePage_20251123_114858990.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_4_-_Pagination_using_TakePage_20251123_114858990.log)
+Logs: [SampleLogs/Test_4_-_Pagination_using_TakePage_20251124_140950235.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_4_-_Pagination_using_TakePage_20251124_140950235.log)
 
 ## Scenario 5: Pagination and projection using QuerySpec and QueryFactory
 Simply fetches 50 rows using pagination and projection but this time using QuerySpec and QueryFactory.
@@ -335,5 +420,187 @@ FROM   (SELECT TOP(@p2) [Restaurant].[dbo].[Customer].[Id],
 Name	DbType	Value
 @p2	Int64	50
 @p3	Boolean	True
+
+SELECT [LPA__1].[CustomerId],
+       [LPA__1].[Id],
+       [LPA__1].[IsActive],
+       [LPA__1].[Name],
+       [LPA__1].[Price]
+FROM   [Restaurant].[dbo].[Order] [LPA__1] 
+
+SELECT [LPA__1].[CustomerId],
+       [LPA__1].[Id],
+       [LPA__1].[IsActive],
+       [LPA__1].[OrderId]
+FROM   [Restaurant].[dbo].[Receipt] [LPA__1] 
 ```
-Logs: [SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251123_114900856.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251123_114900856.log)
+Logs: [SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251124_140952280.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_5_-_Pagination_using_QuerySpec_20251124_140952280.log)
+
+## Scenario 6: Pagination with Customer-only projection.  
+Simply fetches 50 rows using pagination and projection into Customer-only projection.  
+Result: Fetches only 50 rows.  
+ORM Profiler Connection: #6.  
+Query:
+```csharp
+var rows = await meta.Customer
+    .Where(x => x.IsActive)
+    .OrderByDescending(x => x.Id)
+    .Skip(5 * 50)
+    .Take(50)
+    .ProjectToCustomerSimpleView()
+    .ToListAsync();
+```
+
+Generated SQL query sample:
+```sql
+SELECT
+    [LPLA_1].[Id],
+    [LPLA_1].[IsActive],
+    [LPLA_1].[Name],
+    [LPLA_1].[TableNumber] 
+FROM
+    [Restaurant].[dbo].[Customer] [LPLA_1] 
+WHERE
+    (
+        (
+            (
+                (
+                    (
+                        (
+                            (
+                                (
+                                    [LPLA_1].[IsActive] = @p1
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ) 
+ORDER BY
+    [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+
+
+Name	DbType	Value
+@p1	Boolean	True
+```
+Logs: [SampleLogs/Test_6_-_Pagination_with_Customer-only_Projection_20251124_140954010.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_6_-_Pagination_with_Customer-only_Projection_20251124_140954010.log)
+
+## Scenario 7: Pagination with Customer-Receipt projection.  
+Simply fetches 50 rows using pagination and projection into a Receipt-Customer projection. Receipt to Customer is a many:1 relationship.  
+Result: Same as scenario 3, accesses all rows instead of only 50.  
+ORM Profiler Connection: #7.  
+Query:
+```csharp
+var rows = await meta.Customer
+    .Where(x => x.IsActive)
+    .OrderByDescending(x => x.Id)
+    .Skip(5 * 50)
+    .Take(50)
+    .ProjectToCustomerReceipt()
+    .ToListAsync();
+```
+
+Generated SQL query sample:
+```sql
+SELECT
+    [LPLA_1].[Id],
+    [LPLA_1].[IsActive],
+    [LPLA_1].[Name],
+    1 AS [LPFA_2],
+    [LPLA_1].[TableNumber] 
+FROM
+    [Restaurant].[dbo].[Customer] [LPLA_1] 
+WHERE
+    (
+        (
+            (
+                (
+                    (
+                        (
+                            (
+                                (
+                                    [LPLA_1].[IsActive] = @p1
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ) 
+ORDER BY
+    [LPLA_1].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+
+Name	DbType	Value
+@p1	Boolean	True
+
+SELECT [LPLA_2].[Id],
+       [LPLA_2].[CustomerId]
+FROM   [Restaurant].[dbo].[Receipt] [LPLA_2]
+WHERE  (((EXISTS
+          (SELECT [LPLA_1].[Id]
+           FROM   [Restaurant].[dbo].[Customer] [LPLA_1]
+           WHERE  (((((((([LPLA_1].[IsActive] = @p1)))))))
+               AND [LPLA_1].[Id] = [LPLA_2].[CustomerId]))))) 
+```
+Logs: [SampleLogs/Test_7_-_Pagination_with_Customer-Receipt_Projection_20251124_140954022.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_7_-_Pagination_with_Customer-Receipt_Projection_20251124_140954022.log)
+
+## Scenario 8: Pagination with Receipt-Customer projection.  
+Simply fetches 50 rows using pagination and projection into a Receipt-Customer projection. Receipt to Customer is a 1:many relationship.  
+Result: Accesses 50 rows only.  
+ORM Profiler Connection: #7.  
+Query:
+```csharp
+var rows = await meta.Customer
+    .Where(x => x.IsActive)
+    .OrderByDescending(x => x.Id)
+    .Skip(5 * 50)
+    .Take(50)
+    .ProjectToCustomerReceipt()
+    .ToListAsync();
+```
+
+Generated SQL query sample:
+```sql
+SELECT
+    [LPA_L1].[Id],
+    [LPA_L1].[IsActive],
+    [LPA_L1].[Name],
+    [LPA_L1].[TableNumber],
+    [LPA_L2].[CustomerId],
+    [LPA_L2].[Id] AS [Id0],
+    [LPA_L2].[IsActive] AS [IsActive1],
+    [LPA_L2].[OrderId] 
+FROM
+    ([Restaurant].[dbo].[Customer] [LPA_L1] 
+RIGHT JOIN
+    [Restaurant].[dbo].[Receipt] [LPA_L2] 
+        ON [LPA_L1].[Id]=[LPA_L2].[CustomerId]
+    ) 
+WHERE
+(
+    (
+        (
+            (
+                (
+                    (
+                        (
+                            (
+                                [LPA_L2].[IsActive] = @p1
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+) 
+ORDER BY
+[LPA_L2].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+
+Name	DbType	Value
+@p1	Boolean	True
+```
+Logs: [SampleLogs/Test_8_-_Pagination_with_Receipt-Customer_Projection_20251124_140954702.log](https://github.com/mostafa-abdelbrr-silverkey/LLBLGen.Pagination/blob/main/SampleLogs/Test_8_-_Pagination_with_Receipt-Customer_Projection_20251124_140954702.log)

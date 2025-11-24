@@ -1,41 +1,41 @@
-[2025-Nov-23 11:49:00.914]::Method Enter: CreatePagingSelectDQ
-[2025-Nov-23 11:49:00.915]::Method Enter: CreateSelectDQ
-[2025-Nov-23 11:49:00.920]::Method Enter: CreateSubQuery
-[2025-Nov-23 11:49:00.920]::Method Enter: CreatePagingSelectDQ
-[2025-Nov-23 11:49:00.920]::Method Enter: CreateSelectDQ
-[2025-Nov-23 11:49:00.922]::Generated Sql query: 
+[2025-Nov-24 14:09:52.347]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-24 14:09:52.348]::Method Enter: CreateSelectDQ
+[2025-Nov-24 14:09:52.354]::Method Enter: CreateSubQuery
+[2025-Nov-24 14:09:52.354]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-24 14:09:52.354]::Method Enter: CreateSelectDQ
+[2025-Nov-24 14:09:52.357]::Generated Sql query: 
 	Query: SELECT TOP(@p2) [Restaurant].[dbo].[Customer].[Id], [Restaurant].[dbo].[Customer].[IsActive], [Restaurant].[dbo].[Customer].[Name], [Restaurant].[dbo].[Customer].[TableNumber] FROM [Restaurant].[dbo].[Customer] WHERE ( ( [Restaurant].[dbo].[Customer].[IsActive] = @p3)) ORDER BY [Restaurant].[dbo].[Customer].[Id] DESC
 	Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
 	Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
-[2025-Nov-23 11:49:00.923]::Method Exit: CreateSelectDQ
-[2025-Nov-23 11:49:00.923]::Method Exit: CreatePagingSelectDQ: no paging.
-[2025-Nov-23 11:49:00.923]::Method Exit: CreateSubQuery
-[2025-Nov-23 11:49:00.924]::Generated Sql query: 
+[2025-Nov-24 14:09:52.358]::Method Exit: CreateSelectDQ
+[2025-Nov-24 14:09:52.358]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-24 14:09:52.358]::Method Exit: CreateSubQuery
+[2025-Nov-24 14:09:52.359]::Generated Sql query: 
 	Query: SELECT [LPA__1].[Id], [LPA__1].[IsActive], [LPA__1].[Name], 1 AS [LLBLV_1], 1 AS [LLBLV_2], [LPA__1].[TableNumber] FROM (SELECT TOP(@p2) [Restaurant].[dbo].[Customer].[Id], [Restaurant].[dbo].[Customer].[IsActive], [Restaurant].[dbo].[Customer].[Name], [Restaurant].[dbo].[Customer].[TableNumber] FROM [Restaurant].[dbo].[Customer] WHERE ( ( [Restaurant].[dbo].[Customer].[IsActive] = @p3)) ORDER BY [Restaurant].[dbo].[Customer].[Id] DESC) [LPA__1]
 	Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
 	Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
-[2025-Nov-23 11:49:00.924]::Method Exit: CreateSelectDQ
-[2025-Nov-23 11:49:00.924]::Method Exit: CreatePagingSelectDQ: no paging.
-[2025-Nov-23 11:49:00.927]::Executed Sql Query: 
+[2025-Nov-24 14:09:52.359]::Method Exit: CreateSelectDQ
+[2025-Nov-24 14:09:52.359]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-24 14:09:52.363]::Executed Sql Query: 
 	Query: SELECT [LPA__1].[Id], [LPA__1].[IsActive], [LPA__1].[Name], 1 AS [LLBLV_1], 1 AS [LLBLV_2], [LPA__1].[TableNumber] FROM (SELECT TOP(@p2) [Restaurant].[dbo].[Customer].[Id], [Restaurant].[dbo].[Customer].[IsActive], [Restaurant].[dbo].[Customer].[Name], [Restaurant].[dbo].[Customer].[TableNumber] FROM [Restaurant].[dbo].[Customer] WHERE ( ( [Restaurant].[dbo].[Customer].[IsActive] = @p3)) ORDER BY [Restaurant].[dbo].[Customer].[Id] DESC) [LPA__1]
 	Parameter: @p2 : Int64. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: 50.
 	Parameter: @p3 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
 
-[2025-Nov-23 11:49:00.932]::Method Enter: CreatePagingSelectDQ
-[2025-Nov-23 11:49:00.932]::Method Enter: CreateSelectDQ
-[2025-Nov-23 11:49:00.932]::Generated Sql query: 
+[2025-Nov-24 14:09:52.369]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-24 14:09:52.369]::Method Enter: CreateSelectDQ
+[2025-Nov-24 14:09:52.369]::Generated Sql query: 
 	Query: SELECT [LPA__1].[CustomerId], [LPA__1].[Id], [LPA__1].[IsActive], [LPA__1].[Name], [LPA__1].[Price] FROM [Restaurant].[dbo].[Order] [LPA__1]
-[2025-Nov-23 11:49:00.933]::Method Exit: CreateSelectDQ
-[2025-Nov-23 11:49:00.933]::Method Exit: CreatePagingSelectDQ: no paging.
-[2025-Nov-23 11:49:00.935]::Executed Sql Query: 
+[2025-Nov-24 14:09:52.370]::Method Exit: CreateSelectDQ
+[2025-Nov-24 14:09:52.370]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-24 14:09:52.373]::Executed Sql Query: 
 	Query: SELECT [LPA__1].[CustomerId], [LPA__1].[Id], [LPA__1].[IsActive], [LPA__1].[Name], [LPA__1].[Price] FROM [Restaurant].[dbo].[Order] [LPA__1]
 
-[2025-Nov-23 11:49:01.722]::Method Enter: CreatePagingSelectDQ
-[2025-Nov-23 11:49:01.722]::Method Enter: CreateSelectDQ
-[2025-Nov-23 11:49:01.723]::Generated Sql query: 
+[2025-Nov-24 14:09:53.335]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-24 14:09:53.335]::Method Enter: CreateSelectDQ
+[2025-Nov-24 14:09:53.335]::Generated Sql query: 
 	Query: SELECT [LPA__1].[CustomerId], [LPA__1].[Id], [LPA__1].[IsActive], [LPA__1].[OrderId] FROM [Restaurant].[dbo].[Receipt] [LPA__1]
-[2025-Nov-23 11:49:01.723]::Method Exit: CreateSelectDQ
-[2025-Nov-23 11:49:01.723]::Method Exit: CreatePagingSelectDQ: no paging.
-[2025-Nov-23 11:49:01.725]::Executed Sql Query: 
+[2025-Nov-24 14:09:53.335]::Method Exit: CreateSelectDQ
+[2025-Nov-24 14:09:53.335]::Method Exit: CreatePagingSelectDQ: no paging.
+[2025-Nov-24 14:09:53.338]::Executed Sql Query: 
 	Query: SELECT [LPA__1].[CustomerId], [LPA__1].[Id], [LPA__1].[IsActive], [LPA__1].[OrderId] FROM [Restaurant].[dbo].[Receipt] [LPA__1]
 

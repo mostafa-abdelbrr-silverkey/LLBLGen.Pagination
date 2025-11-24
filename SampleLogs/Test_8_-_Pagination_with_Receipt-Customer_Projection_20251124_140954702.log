@@ -1,0 +1,14 @@
+[2025-Nov-24 14:09:54.711]::Method Enter: CreatePagingSelectDQ
+[2025-Nov-24 14:09:54.711]::Method Enter: CreateSelectDQ
+[2025-Nov-24 14:09:54.714]::Generated Sql query: 
+	Query: SELECT [LPA_L1].[Id], [LPA_L1].[IsActive], [LPA_L1].[Name], [LPA_L1].[TableNumber], [LPA_L2].[CustomerId], [LPA_L2].[Id] AS [Id0], [LPA_L2].[IsActive] AS [IsActive1], [LPA_L2].[OrderId] FROM ([Restaurant].[dbo].[Customer] [LPA_L1] RIGHT JOIN [Restaurant].[dbo].[Receipt] [LPA_L2] ON [LPA_L1].[Id]=[LPA_L2].[CustomerId]) WHERE ( ( ( ( ( ( ( ( [LPA_L2].[IsActive] = @p1)))))))) ORDER BY [LPA_L2].[Id] DESC
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-24 14:09:54.715]::Method Exit: CreateSelectDQ
+[2025-Nov-24 14:09:54.715]::Generated Sql query: 
+	Query: SELECT [LPA_L1].[Id], [LPA_L1].[IsActive], [LPA_L1].[Name], [LPA_L1].[TableNumber], [LPA_L2].[CustomerId], [LPA_L2].[Id] AS [Id0], [LPA_L2].[IsActive] AS [IsActive1], [LPA_L2].[OrderId] FROM ([Restaurant].[dbo].[Customer] [LPA_L1] RIGHT JOIN [Restaurant].[dbo].[Receipt] [LPA_L2] ON [LPA_L1].[Id]=[LPA_L2].[CustomerId]) WHERE ( ( ( ( ( ( ( ( [LPA_L2].[IsActive] = @p1)))))))) ORDER BY [LPA_L2].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+[2025-Nov-24 14:09:54.716]::Method Exit: CreatePagingSelectDQ
+[2025-Nov-24 14:09:54.723]::Executed Sql Query: 
+	Query: SELECT [LPA_L1].[Id], [LPA_L1].[IsActive], [LPA_L1].[Name], [LPA_L1].[TableNumber], [LPA_L2].[CustomerId], [LPA_L2].[Id] AS [Id0], [LPA_L2].[IsActive] AS [IsActive1], [LPA_L2].[OrderId] FROM ([Restaurant].[dbo].[Customer] [LPA_L1] RIGHT JOIN [Restaurant].[dbo].[Receipt] [LPA_L2] ON [LPA_L1].[Id]=[LPA_L2].[CustomerId]) WHERE ( ( ( ( ( ( ( ( [LPA_L2].[IsActive] = @p1)))))))) ORDER BY [LPA_L2].[Id] DESC OFFSET 250 ROWS FETCH NEXT 50 ROWS ONLY
+	Parameter: @p1 : Boolean. Length: 0. Precision: 0. Scale: 0. Direction: Input. Value: True.
+

@@ -41,6 +41,12 @@ internal class Program
             await RunWithTimeout(ScenarioPaginationWithProjectionTakePage, "Test 4 - Pagination using TakePage");
 
             await RunWithTimeout(ScenarioPaginationWithProjectionQuerySpec, "Test 5 - Pagination using QuerySpec");
+
+            await RunWithTimeout(ScenarioPaginationWithCustomerOnlyProjection, "Test 6 - Pagination with Customer-only Projection");
+
+            await RunWithTimeout(ScenarioPaginationWithCustomerReceiptProjection, "Test 7 - Pagination with Customer-Receipt Projection");
+
+            await RunWithTimeout(ScenarioPaginationWithReceiptCustomerProjection, "Test 8 - Pagination with Receipt-Customer Projection");
         }
         catch (Exception ex)
         {
@@ -372,6 +378,84 @@ internal class Program
                 .Page(5, 50)
                 .ProjectToCustomerView(qf);
             var rows = await adapter.FetchQueryAsync(q);
+
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    private static async Task ScenarioPaginationWithCustomerOnlyProjection(DataAccessAdapter adapter)
+    {
+        Console.WriteLine("--- Test 6: Pagination with Simple Customer only Projection ---");
+        var meta = new LinqMetaData(adapter);
+
+        try
+        {
+            var rows = await meta.Customer
+                .Where(x => x.IsActive)
+                .OrderByDescending(x => x.Id)
+                .Skip(5 * 50)
+                .Take(50)
+                .ProjectToCustomerSimpleView()
+                .ToListAsync();
+
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    private static async Task ScenarioPaginationWithCustomerReceiptProjection(DataAccessAdapter adapter)
+    {
+        Console.WriteLine("--- Test 7: Pagination with Simple Customer only Projection ---");
+        var meta = new LinqMetaData(adapter);
+
+        try
+        {
+            var rows = await meta.Customer
+                .Where(x => x.IsActive)
+                .OrderByDescending(x => x.Id)
+                .Skip(5 * 50)
+                .Take(50)
+                .ProjectToCustomerReceipt()
+                .ToListAsync();
+
+            Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    private static async Task ScenarioPaginationWithReceiptCustomerProjection(DataAccessAdapter adapter)
+    {
+        Console.WriteLine("--- Test 8: Pagination with Simple Customer only Projection ---");
+        var meta = new LinqMetaData(adapter);
+
+        try
+        {
+            var rows = await meta.Receipt
+                .Where(x => x.IsActive)
+                .OrderByDescending(x => x.Id)
+                .Skip(5 * 50)
+                .Take(50)
+                .ProjectToReceiptCustomer()
+                .ToListAsync();
+
+            // Add delay for ORM Profiler to capture this query.
+            Thread.Sleep(1000);
 
             Console.WriteLine($"Retrieved {rows.Count} rows from page 5");
         }
