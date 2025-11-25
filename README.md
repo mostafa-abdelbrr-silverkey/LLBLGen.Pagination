@@ -42,8 +42,6 @@ All scenarios have a timeout of 30 seconds to avoid consuming all available RAM 
 
 In the build output folder, you can find a `logs` folder with a log file per scenario, and there is a copy attached at the repository root in `SampleLogs` too. The logs include generated queries too.  
 
-You can also find a snapshot from ORM Profiler in the repository root.  
-
 ## ORM Profiler results
 The following results are referenced in the scenario documentation, specifically the `# rows read` column.
 ![ORMProfilerResults1](image/README/ORMProfilerResults1.png)
