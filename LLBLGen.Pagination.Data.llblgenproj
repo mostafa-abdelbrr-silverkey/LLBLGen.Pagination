@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v5.12 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="5.12" TargetFrameworkName="LLBLGen Pro Runtime Framework" UseLegacyDefaults="false">
+<!--LLBLGen Pro v5.13 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="5.13" TargetFrameworkName="LLBLGen Pro Runtime Framework" UseLegacyDefaults="false">
   <Properties>
     <Abbreviations />
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
@@ -99,18 +99,12 @@
         <DestinationRootFolder Value=".\Data" />
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
-        <PlatformName Value=".NET 8" />
+        <PlatformName Value=".NET 10" />
         <PresetName Value="SD.Presets.Adapter.General.Netstandard" />
         <RootNamespace Value="LLBLGen.Pagination.Data" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
-          <Binding Name="SD.TemplateBindings.AccessSpecific" />
-          <Binding Name="SD.TemplateBindings.DB2Specific" />
-          <Binding Name="SD.TemplateBindings.FirebirdSpecific" />
-          <Binding Name="SD.TemplateBindings.MySqlSpecific" />
-          <Binding Name="SD.TemplateBindings.OracleODPNetSpecific" />
-          <Binding Name="SD.TemplateBindings.PostgreSqlSpecific" />
-          <Binding Name="SD.TemplateBindings.SharedTemplates.Net8" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.Net10" />
           <Binding Name="SD.TemplateBindings.SharedTemplates" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
           <Binding Name="SD.TemplateBindings.General" />
@@ -345,12 +339,12 @@
           <DestinationRootFolder Value=".\Data" />
           <FrameworkName Value="DTO Class Model" />
           <LanguageName Value="C#" />
-          <PlatformName Value=".NET 8" />
+          <PlatformName Value=".NET 10" />
           <PresetName Value="SD.DTOClasses.ReadOnlyDTOs" />
           <RootNamespace Value="LLBLGen.Pagination.Crud" />
           <TemplateGroup Value="General" />
           <TemplateBindings>
-            <Binding Name="SD.DTOClassModel.NET8" />
+            <Binding Name="SD.DTOClassModel.NET10" />
             <Binding Name="SD.DTOClassModel" />
             <Binding Name="SD.TemplateBindings.General" />
           </TemplateBindings>
